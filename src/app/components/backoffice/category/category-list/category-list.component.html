@@ -1,0 +1,45 @@
+<h4 class="pb-3 text-uppercase">{{ langService.translate("categories.list.title") }}</h4>
+
+<div class="pb-3"> 
+    <div class="form-group">
+    <input 
+        matInput
+        type="text" 
+        class="form-control" 
+        (keyup)="searchCategory($event)" 
+        [placeholder]="langService.translate('categories.list.searchCategories')">
+    </div>
+</div>
+
+<div>    
+    <table *ngIf="filteredCategories.length; else noCategory" class="table table-striped">
+        <thead>
+            <tr>
+                <th>{{ langService.translate("categories.list.categoryId") }}</th>
+                <th>{{ langService.translate("categories.list.name") }}</th>
+                <th>{{ langService.translate("categories.list.description") }}</th>
+                <th>{{ langService.translate("categories.list.language") }}</th>
+                <th width="150px"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let category of filteredCategories">
+                <td>{{ category.categoryId }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ category.description }}</td>
+                <td *ngIf="getLanguage(category.language); else errorLanguageNotFound">{{ getLanguage(category.language) }}</td>
+                <ng-template #errorLanguageNotFound>
+                    <td class="text-danger">{{ this.langService.translate("app.errors.languageNotFound") }}</td>
+                </ng-template>
+                <td>
+                    <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit-category', category.categoryId]"><mat-icon>edit</mat-icon></button>
+                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteCategory(category.categoryId)"><mat-icon>delete</mat-icon></button>                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ng-template #noCategory>
+        <p>{{ langService.translate("categories.list.noCategoryAvailable") }}</p>
+    </ng-template>
+</div>

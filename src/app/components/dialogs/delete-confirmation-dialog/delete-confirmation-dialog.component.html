@@ -1,0 +1,8 @@
+<div mat-dialog-title class="text-center m-3">
+  {{ langService.translate("app.popup.confirmMessage") }} {{ data.personalizedText }} ?
+</div>
+
+<div mat-dialog-actions class="text-center m-3">
+  <button class="btn btn-sm btn-secondary mx-1" (click)="onCancel()">{{ langService.translate("app.popup.cancel") }}</button>
+  <button class="btn btn-sm btn-danger mx-1" color="warn" (click)="onConfirm()">{{ langService.translate("app.popup.confirm") }}</button>
+</div>

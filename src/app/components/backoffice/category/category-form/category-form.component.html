@@ -1,0 +1,33 @@
+<h4 class="pb-3 text-uppercase">{{ langService.translate("categories.new.title") }}</h4>
+
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-column mb-3 text-start">
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("categories.new.name") }}</label>
+            <input class="form-control" type="text" formControlName="name">
+            <small class="text-danger" *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
+                {{ langService.translate("categories.new.nameError") }}
+            </small>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("categories.new.description") }}</label>
+            <input class="form-control" type="text" formControlName="description">
+            <small class="text-danger" *ngIf="categoryForm.get('description')?.invalid && categoryForm.get('description')?.touched">
+                {{ langService.translate("categories.new.descriptionError") }}
+            </small>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("categories.new.language") }}</label>
+            <select class="form-control" formControlName="language">
+                <option value="" disabled selected>{{ langService.translate("categories.new.languageMessage") }}</option>
+                <option *ngFor="let lang of objectKeys(languages)" [value]="lang">
+                    {{ languages[lang] }}
+                </option>
+            </select>
+            <small class="text-danger" *ngIf="categoryForm.get('language')?.invalid && categoryForm.get('language')?.touched">
+                {{ langService.translate("categories.new.languageError") }}
+            </small>
+        </div>
+    </div>
+    <button mat-flat-button color="primary" type="submit" [disabled]="categoryForm.invalid"><mat-icon>save</mat-icon>{{ langService.translate("categories.new.save") }}</button>
+</form>

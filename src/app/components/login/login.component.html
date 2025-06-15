@@ -1,0 +1,28 @@
+<div class="d-flex flex-column justify-content-center align-items-center">
+  <mat-card class="login-card my-2">
+    <mat-card-header>
+      <mat-card-title>{{ langService.translate("login.title") }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+        <mat-form-field>
+          <mat-label>{{ langService.translate("login.username") }}</mat-label>
+          <input matInput formControlName="username" required />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>{{ langService.translate("login.password") }}</mat-label>
+          <input matInput type="password" formControlName="password" required />
+        </mat-form-field>
+
+        <button mat-flat-button color="primary" type="submit">{{ langService.translate("login.login") }}</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+  <div class="d-flex flex-column justify-content-center">   
+    <button mat-button color="primary" [routerLink]="['/categories']">{{ langService.translate("app.routing.demo") }}</button>
+  </div>
+</div>
+
+<app-language-selector></app-language-selector>
+

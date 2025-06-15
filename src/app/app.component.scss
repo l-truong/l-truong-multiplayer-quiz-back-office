@@ -1,0 +1,17 @@
+:host {
+  height: 100%;
+  width: 100%;
+}
+
+mat-expansion-panel {
+  margin: 0px;
+  box-shadow: none!important;
+}
+mat-drawer-container { 
+  height: 100vh; 
+  width: 100vw;
+  padding: 25px;
+}
+mat-drawer {
+  margin-left: -25px;
+}

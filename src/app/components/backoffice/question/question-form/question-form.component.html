@@ -1,0 +1,92 @@
+<h4 class="pb-3 text-uppercase">{{ langService.translate("questions.new.title") }}</h4>
+
+<form [formGroup]="questionForm" (ngSubmit)="onSubmit()">
+    <div class="d-flex flex-column mb-3 text-start">
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("questions.new.questionText") }}</label>
+            <input class="form-control" type="questionText" formControlName="questionText">
+            <small class="text-danger" *ngIf="questionForm.get('questionText')?.invalid && questionForm.get('questionText')?.touched">
+                {{ langService.translate("questions.new.questionTextError") }}
+            </small>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("questions.new.options") }}</label>
+            <div class="d-flex gap-3">
+                <div class="col">
+                    <input class="form-control" type="option1" formControlName="option1">
+                    <small class="text-danger" *ngIf="questionForm.get('option1')?.invalid && questionForm.get('option1')?.touched">
+                        {{ langService.translate("questions.new.optionsError") }}
+                    </small>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="option2" formControlName="option2">
+                    <small class="text-danger" *ngIf="questionForm.get('option2')?.invalid && questionForm.get('option2')?.touched">
+                        {{ langService.translate("questions.new.optionsError") }}
+                    </small>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="option3" formControlName="option3">
+                    <small class="text-danger" *ngIf="questionForm.get('option3')?.invalid && questionForm.get('option3')?.touched">
+                        {{ langService.translate("questions.new.optionsError") }}
+                    </small>
+                </div>
+                <div class="col">
+                    <input class="form-control" type="option4" formControlName="option4">
+                    <small class="text-danger" *ngIf="questionForm.get('option4')?.invalid && questionForm.get('option4')?.touched">
+                        {{ langService.translate("questions.new.optionsError") }}
+                    </small>
+                </div>  
+            </div>  
+            <small class="text-danger" *ngIf="questionForm.hasError('optionsNotUnique')
+                && questionForm.get('option1')?.touched
+                && questionForm.get('option2')?.touched
+                && questionForm.get('option3')?.touched
+                && questionForm.get('option4')?.touched">
+                {{ langService.translate("questions.new.optionsErrorUnique") }}
+            </small>                           
+        </div>        
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("questions.new.correctAnswer") }}</label>
+            <input class="form-control" type="text" formControlName="correctAnswer">
+            <small class="text-danger" *ngIf="questionForm.get('correctAnswer')?.errors?.['required'] && questionForm.get('correctAnswer')?.touched; else checkCorrectAnswer">
+                {{ langService.translate("questions.new.correctAnswerError") }}
+            </small>
+            <ng-template #checkCorrectAnswer>
+                <small class="text-danger"
+                    *ngIf="questionForm.hasError('correctAnswerNotInOptions') && questionForm.get('correctAnswer')?.touched">
+                    {{ langService.translate("questions.new.correctAnswerErrorMustBeProvived") }}
+                </small>
+            </ng-template>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate('questions.new.explanation') }}</label>
+            <input class="form-control" type="text" formControlName="explanation">
+            <small class="text-danger" *ngIf="questionForm.get('explanation')?.invalid && questionForm.get('explanation')?.touched">
+                {{ langService.translate("questions.new.explanationError") }}
+            </small>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("questions.new.category") }}</label>
+            <select class="form-control" formControlName="categoryId">
+                <option value="" disabled selected>{{ langService.translate("questions.new.categoryMessage") }}</option>
+                <option *ngFor="let category of categories" [value]="category.categoryId">
+                    {{ category.name }} ({{ getLanguage(category.language) }})
+                </option>
+            </select>
+            <small class="text-danger" *ngIf="categories.length == 0">
+                {{ langService.translate("questions.new.categoryEmpty") }}
+            </small>
+            <small class="text-danger" *ngIf="categories.length > 0 && questionForm.get('categoryId')?.invalid && questionForm.get('categoryId')?.touched">
+                {{ langService.translate("questions.new.categoryError") }}
+            </small>
+        </div>
+        <div class="col pb-2">
+            <label class="form-label">{{ langService.translate("questions.new.imageUrl") }}</label>
+            <input class="form-control" type="text" formControlName="imageUrl">
+            <small class="text-danger" *ngIf="questionForm.get('imageUrl')?.invalid && questionForm.get('imageUrl')?.touched">
+                {{ langService.translate("questions.new.imageUrlError") }}
+            </small>
+        </div>
+    </div>
+    <button mat-flat-button color="primary" type="submit" [disabled]="questionForm.invalid"><mat-icon>save</mat-icon>{{ langService.translate("questions.new.save") }}</button>
+</form>

@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+.mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+}
+.mat-expansion-panel-body {
+  padding: 0px!important;
+}
+.mat-expansion-panel-header {
+  padding: 0px 16px;
+}
+.mdc-list {
+  padding: 0px!important;
+}
