@@ -11,7 +11,7 @@ import { LangService } from 'src/app/services/translation/lang.service';
 export class AppComponent implements OnInit {
   
   @ViewChild('drawer') drawer!: MatDrawer;
-  title = 'multiplayer-quiz-backoffice';
+  title = 'l-truong-multiplayer-quiz-backoffice';
   isLoginRoute = false;  
   
   constructor(
