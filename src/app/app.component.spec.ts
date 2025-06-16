@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'l-truong-multiplayer-quiz-backoffice'`, () => {
+  it(`should have as title 'multiplayer-quiz-backoffice'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('l-truong-multiplayer-quiz-backoffice');
+    expect(app.title).toEqual('multiplayer-quiz-backoffice');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('l-truong-multiplayer-quiz-backoffice app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('multiplayer-quiz-backoffice app is running!');
   });
 });
