@@ -12,6 +12,12 @@ import { CategoryModule } from './components/backoffice/category/category.module
 import { QuestionModule } from './components/backoffice/question/question.module';
 import { LanguageSelectorModule } from './components/language-selector/language-selector.module';
 
+import { CategoryService } from './core/services/categories/category.service';
+import { CategoryDelegatorService } from './core/services/categories/category-delegator.service';
+import { QuestionService } from './core/services/questions/question.service';
+import { QuestionDelegatorService } from './core/services/questions/question-delegator.service';
+
+
 @NgModule({
   declarations: [
     AppComponent
@@ -30,7 +36,10 @@ import { LanguageSelectorModule } from './components/language-selector/language-
     QuestionModule,
     LanguageSelectorModule,    
   ],
-  providers: [],
+  providers: [
+    { provide: CategoryService, useClass: CategoryDelegatorService },
+    { provide: QuestionService, useClass: QuestionDelegatorService }    
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

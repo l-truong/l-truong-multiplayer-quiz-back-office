@@ -12,34 +12,42 @@
 </div>
 
 <div>    
-    <table *ngIf="filteredCategories.length; else noCategory" class="table table-striped">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+    <table *ngIf="!isLoading && filteredCategories.length > 0" class="table table-striped">
         <thead>
             <tr>
-                <th>{{ langService.translate("categories.list.categoryId") }}</th>
-                <th>{{ langService.translate("categories.list.name") }}</th>
-                <th>{{ langService.translate("categories.list.description") }}</th>
-                <th>{{ langService.translate("categories.list.language") }}</th>
+                <th>{{ langService.translate("categories.model._id") }}</th>
+                <th>{{ langService.translate("categories.model.categoryId") }}</th>
+                <th>{{ langService.translate("categories.model.name") }}</th>
+                <th>{{ langService.translate("categories.model.description") }}</th>
+                <th>{{ langService.translate("categories.model.language") }}</th>
+                <th>{{ langService.translate("categories.model.createdAt") }}</th>
+                <th>{{ langService.translate("categories.model.updatedAt") }}</th>
                 <th width="150px"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let category of filteredCategories">
+                <td>{{ category._id }}</td>
                 <td>{{ category.categoryId }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
-                <td *ngIf="getLanguage(category.language); else errorLanguageNotFound">{{ getLanguage(category.language) }}</td>
+                <td *ngIf="sharedFunctionsService.getLanguage(category.language, languages); else errorLanguageNotFound">{{ sharedFunctionsService.getLanguage(category.language, languages) }}</td>
                 <ng-template #errorLanguageNotFound>
-                    <td class="text-danger">{{ this.langService.translate("app.errors.languageNotFound") }}</td>
-                </ng-template>
+                    <td class="text-danger">{{ this.langService.translate("categories.list.errors.languageNotFound") }}</td>
+                </ng-template>                
+                <td>{{ category.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ category.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>
                 <td>
-                    <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit-category', category.categoryId]"><mat-icon>edit</mat-icon></button>
-                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteCategory(category.categoryId)"><mat-icon>delete</mat-icon></button>                    
+                    <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit-category', category._id]"><mat-icon>edit</mat-icon></button>
+                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteCategory(category._id)"><mat-icon>delete</mat-icon></button>                    
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <ng-template #noCategory>
-        <p>{{ langService.translate("categories.list.noCategoryAvailable") }}</p>
-    </ng-template>
+    <p *ngIf="!isLoading && filteredCategories.length === 0">
+        {{ langService.translate("categories.list.noCategoryAvailable") }}
+    </p>
 </div>

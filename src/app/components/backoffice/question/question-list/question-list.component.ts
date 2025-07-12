@@ -4,9 +4,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/components/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { Category } from 'src/app/models/category';
 import { Question } from 'src/app/models/question';
-import { CategoryService } from 'src/app/services/categories/category.service';
-import { QuestionService } from 'src/app/services/questions/question.service';
-import { LangService } from 'src/app/services/translation/lang.service';
+import { SharedFunctionsService } from 'src/app/core/shared/shared-functions.service';
+import { CategoryDelegatorService } from 'src/app/core/services/categories/category-delegator.service';
+import { QuestionDelegatorService } from 'src/app/core/services/questions/question-delegator.service';
+import { LangService } from 'src/app/core/services/translation/lang.service';
 
 @Component({
   selector: 'app-question-list',
@@ -15,22 +16,47 @@ import { LangService } from 'src/app/services/translation/lang.service';
 })
 export class QuestionListComponent {
 
+  categoryService: any;
+  questionService: any;
+  isLoading: boolean = true;
   categories: Category[] = [];
   questions: Question[] = [];
   filteredQuestions: Question[] = [];
   languages: { [key: string]: string } = config.otherParameters.languages;
 
   constructor(
-    public langService: LangService,
-    private categoryService: CategoryService,
-    private questionService: QuestionService,
+    public langService: LangService,    
+    public sharedFunctionsService: SharedFunctionsService,
+    private categoryDelegator: CategoryDelegatorService,
+    private questionDelegator: QuestionDelegatorService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.categories = this.categoryService.getCategories();
-    this.questions = this.questionService.getQuestions();
-    this.filteredQuestions = this.questions;
+    this.categoryService = this.categoryDelegator.getService();
+    this.questionService = this.questionDelegator.getService();
+
+    const localCategories = this.sharedFunctionsService.getCategoriesFromLocalStorage();
+    if (localCategories) {
+      this.categories = localCategories;
+    } else {
+      this.sharedFunctionsService.fetchCategories(this.categoryService, (data: Category[]) => {
+        this.categories = data;
+      });
+    }
+
+    const localQuestions = this.sharedFunctionsService.getQuestionsFromLocalStorage();
+    if (localQuestions) {
+      this.questions = localQuestions;
+      this.filteredQuestions = localQuestions;
+      this.isLoading = false;
+    } else {
+      this.sharedFunctionsService.fetchQuestions(this.questionService, (data: Question[]) => {
+        this.questions = data;
+        this.filteredQuestions = data;
+        this.isLoading = false;
+      });
+    }
   }
 
   searchQuestions(event: Event): void {
@@ -53,16 +79,25 @@ export class QuestionListComponent {
     });
   } 
 
-  deleteQuestion(questionId: string): void {
+  deleteQuestion(id: string): void {
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       data: {
         personalizedText: this.langService.translate("questions.name")
       }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.questionService.deleteQuestion(questionId);
+    dialogRef.afterClosed().subscribe(confirmed => {
+      if (confirmed) {
+        this.questionService.deleteQuestion(id).subscribe({
+          next: () => {
+            this.sharedFunctionsService.fetchQuestions(this.questionService, (data: Question[]) => {             
+              this.questions = data;
+              this.filteredQuestions = data;
+              this.isLoading = false;
+            });
+          },
+          error: (err: any) => console.error('Error deleting category', err)
+        });
       }
     });
   }

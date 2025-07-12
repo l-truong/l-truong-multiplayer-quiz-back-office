@@ -3,7 +3,7 @@
     <button (click)="drawer.toggle()" mat-icon-button>
       <mat-icon>menu</mat-icon>
     </button>
-    <span class="text-uppercase">{{ langService.translate("app.routing.backoffice") }}</span> 
+    <span class="text-uppercase">{{ langService.translate("app.routing.backoffice") }} <span *ngIf="isDemo()">{{ langService.translate("app.routing.demo") }}</span></span> 
   </div> 
   <app-language-selector></app-language-selector>
 </mat-toolbar>
@@ -51,7 +51,7 @@
     </div>              
     <mat-divider></mat-divider>
     <mat-nav-list>            
-      <mat-list-item routerLink="">
+      <mat-list-item routerLink="/login" (click)="logout()">
         <span class="d-inline-flex gap-2 text-uppercase"><mat-icon class="mr-2">exit_to_app</mat-icon>{{ langService.translate("app.routing.logout") }}</span>        
       </mat-list-item>
     </mat-nav-list>

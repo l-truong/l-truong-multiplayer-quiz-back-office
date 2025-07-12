@@ -12,22 +12,28 @@
 </div>
 
 <div>    
-    <table *ngIf="filteredQuestions.length; else noQuestion" class="table table-striped">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+    <table *ngIf="!isLoading && filteredQuestions.length > 0" class="table table-striped">
         <thead>
             <tr>
-                <th>{{ langService.translate("questions.list.questionId") }}</th>
-                <th>{{ langService.translate("questions.list.questionText") }}</th>
-                <th>{{ langService.translate("questions.list.options") }}</th>
-                <th>{{ langService.translate("questions.list.correctAnswer") }}</th>
-                <th>{{ langService.translate("questions.list.explanation") }}</th>
-                <th>{{ langService.translate("questions.list.category") }}</th>
+                <th>{{ langService.translate("questions.model._id") }}</th>
+                <th>{{ langService.translate("questions.model.questionId") }}</th>
+                <th>{{ langService.translate("questions.model.questionText") }}</th>
+                <th>{{ langService.translate("questions.model.options") }}</th>
+                <th>{{ langService.translate("questions.model.correctAnswer") }}</th>
+                <th>{{ langService.translate("questions.model.explanation") }}</th>
+                <th>{{ langService.translate("questions.model.categoryId") }}</th>
                 <th>{{ langService.translate("questions.list.language") }}</th>
-                <th>{{ langService.translate("questions.list.imageUrl") }}</th>
+                <th>{{ langService.translate("questions.model.imageUrl") }}</th>                
+                <th>{{ langService.translate("questions.model.createdAt") }}</th>
+                <th>{{ langService.translate("questions.model.updatedAt") }}</th>
                 <th width="150px"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let question of filteredQuestions">
+                <td>{{ question._id }}</td>
                 <td>{{ question.questionId }}</td>
                 <td>{{ question.questionText }}</td>
                 <td>
@@ -40,24 +46,28 @@
                     {{ getCategory(question.categoryId)?.name }}
                 </td>
                 <ng-template #errorCategoryDelete>
-                    <td class="text-danger">{{ this.langService.translate("app.errors.categoryDeleted") }}</td>
+                    <td class="text-danger">{{ this.langService.translate("questions.list.errors.categoryDeleted") }}</td>
                 </ng-template>
                 <td *ngIf="getCategory(question.categoryId)?.language; else errorLanguageDelete">
                         {{ getLanguage(getCategory(question.categoryId)?.language || '') }}
                 </td>
                 <ng-template #errorLanguageDelete>
-                    <td class="text-danger">{{ this.langService.translate("app.errors.languageNotFound") }}</td>
-                </ng-template>                
-                <td><a [href]="question.imageUrl" target="_blank">{{ langService.translate("questions.list.website") }}</a></td>
+                    <td class="text-danger">{{ this.langService.translate("questions.list.errors.languageNotFound") }}</td>
+                </ng-template>                       
+                <td>{{ question.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+                <td>{{ question.updatedAt | date:'dd/MM/yyyy HH:mm' }}</td>         
                 <td>
-                    <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit-question', question.questionId]"><mat-icon>edit</mat-icon></button>
-                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteQuestion(question.questionId)"><mat-icon>delete</mat-icon></button>                   
+                    <a [href]="question.imageUrl" target="_blank">{{ langService.translate("questions.list.website") }}</a>
+                </td>
+                <td>
+                    <button class="btn btn-sm btn-secondary mx-1" [routerLink]="['/edit-question', question._id]"><mat-icon>edit</mat-icon></button>
+                    <button class="btn btn-sm btn-danger mx-1" (click)="deleteQuestion(question._id)"><mat-icon>delete</mat-icon></button>                   
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <ng-template #noQuestion>
-        <p>{{ langService.translate("questions.list.noQuestionAvailable") }}</p>
-    </ng-template>
+    <p *ngIf="!isLoading && filteredQuestions.length === 0">
+        {{ langService.translate("questions.list.noQuestionAvailable") }}
+    </p>
 </div>

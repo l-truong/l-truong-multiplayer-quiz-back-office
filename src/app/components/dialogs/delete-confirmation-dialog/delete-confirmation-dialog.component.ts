@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { LangService } from 'src/app/services/translation/lang.service';
+import { LangService } from 'src/app/core/services/translation/lang.service';
 
 @Component({
   selector: 'app-delete-confirmation-dialog',
@@ -13,7 +13,7 @@ export class DeleteConfirmationDialogComponent {
     public langService: LangService,
     public dialogRef: MatDialogRef<DeleteConfirmationDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { personalizedText: string }
-  ) { }
+  ) {}
 
   onConfirm(): void {
     this.dialogRef.close(true);

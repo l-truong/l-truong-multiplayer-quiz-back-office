@@ -7,6 +7,7 @@ import { frConfig } from 'src/assets/lang/fr.config';
   providedIn: 'root',
 })
 export class LangService {
+  
   currentLang: any;
 
   constructor() {
@@ -14,7 +15,7 @@ export class LangService {
   }
 
  initializeLanguage() {
-    const storedLang = localStorage.getItem(config.localStorage.language);
+    const storedLang = localStorage.getItem(config.localStorage.sufix + config.localStorage.language);
     if (storedLang) {
       this.setLanguage(storedLang);
     } else {
@@ -28,7 +29,7 @@ export class LangService {
     } else {
       this.currentLang = enConfig;
     }
-    localStorage.setItem(config.localStorage.language, lang);
+    localStorage.setItem(config.localStorage.sufix + config.localStorage.language, lang);
   }
 
   translate(key: string): string {

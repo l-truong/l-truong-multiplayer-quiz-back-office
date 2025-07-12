@@ -19,4 +19,4 @@ import { MaterialModule } from 'src/app/material-module';
     LanguageSelectorComponent
   ]
 })
-export class LanguageSelectorModule { }
+export class LanguageSelectorModule {}

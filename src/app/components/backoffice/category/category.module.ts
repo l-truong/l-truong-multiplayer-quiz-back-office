@@ -22,4 +22,4 @@ import { MaterialModule } from 'src/app/material-module';
     ])
   ]
 })
-export class CategoryModule { }
+export class CategoryModule {}

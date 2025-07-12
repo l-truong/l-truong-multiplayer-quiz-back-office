@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CategoryListComponent } from './category-list.component';
-import { LangService } from 'src/app/services/translation/lang.service';
+import { LangService } from 'src/app/core/services/translation/lang.service';
 
 describe('CategoriesListComponent', () => {
   let component: CategoryListComponent;

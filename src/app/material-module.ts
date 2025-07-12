@@ -23,7 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatOptionModule } from '@angular/material/core';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; 
 
 @NgModule({
     exports:[
@@ -50,7 +50,8 @@ import { MatOptionModule } from '@angular/material/core';
         MatDividerModule,
         MatExpansionModule,
         MatFormFieldModule,
-        MatOptionModule
+        MatOptionModule,
+        MatProgressSpinnerModule
     ]
 })
 
