@@ -1055,7 +1055,7 @@ export const mockQuestions = [
         ],
         "correctAnswer": "Absorption d'eau",
         "explanation": "Les racines absorbent l'eau et les nutriments du sol.",
-        "categoryId": "67c747aaf2b67cb4de5c3f02",
+        "categoryId": "67c747aaf2b67cb4de5c3eff",
         "imageUrl": "https://images.unsplash.com/photo-1582146751077-51624b99a2cb?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
         "createdAt": "2025-03-06T22:04:11.484Z",
         "updatedAt": "2025-03-06T22:04:11.484Z",
