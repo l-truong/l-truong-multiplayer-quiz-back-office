@@ -12,7 +12,7 @@ export const inputConfig = {
     categoryParameters: {
         name: {
             min: 3,
-            max: 30,
+            max: 100,
         },
         description: {
             min: 3,
@@ -22,11 +22,11 @@ export const inputConfig = {
     questionsParameters: {
         questionText: {
             min: 3,
-            max: 250,
+            max: 100,
         },
         answer: {
             min: 3,
-            max: 250,
+            max: 150,
         },
         explanation: {
             min: 3,
