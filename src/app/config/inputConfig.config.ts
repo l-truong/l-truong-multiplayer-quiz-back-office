@@ -34,7 +34,7 @@ export const inputConfig = {
         },
         imageUrl: {
             min: 3,
-            max: 50,
+            max: 250,
         }
     },
 };
