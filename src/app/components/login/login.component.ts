@@ -52,16 +52,16 @@ export class LoginComponent implements OnInit {
     } else {                  
       const usernameCtrl = this.loginForm.get('username');
       if (usernameCtrl?.hasError('required')) {
-        this.usernameError = this.langService.translate("app.errors.loginComponent.usernameRequired");
+        this.usernameError = this.langService.translate("app.login.errors.usernameRequired");
       } else if (usernameCtrl?.hasError('minlength')) {
-        this.usernameError = this.langService.translate("app.errors.loginComponent.usernameTooShort");
+        this.usernameError = this.langService.translate("app.login.errors.usernameTooShort");
       }
 
       const passwordCtrl = this.loginForm.get('password');
       if (passwordCtrl?.hasError('required')) {
-        this.passwordError = this.langService.translate("app.errors.loginComponent.passwordRequired");
+        this.passwordError = this.langService.translate("app.login.errors.passwordRequired");
       } else if (passwordCtrl?.hasError('minlength')) {
-        this.passwordError = this.langService.translate("app.errors.loginComponent.passwordTooShort");
+        this.passwordError = this.langService.translate("app.login.errors.passwordTooShort");
       }
     }
   }
@@ -82,7 +82,7 @@ export class LoginComponent implements OnInit {
         },
         error: (err) => {      
           console.error('Login error', err);
-          this.loginError = this.langService.translate("app.errors.loginComponent.incorrectLogin");      
+          this.loginError = this.langService.translate("app.login.errors.incorrectLogin");      
         }
       });
     }    
